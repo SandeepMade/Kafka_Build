@@ -107,9 +107,32 @@ public class DynamicIsaacPodLogFetcher {
                 }
             }
         } catch (IOException e) {
+            e.printStackTrace()import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class OracleDatabaseConnection {
+    public static void main(String[] args) {
+        // Database connection details
+        String url = "jdbc:oracle:thin:@t2isa4d2.az.3pc.att.com:1522:t2isa4d2";
+        String username = "MVP_DM";
+        String password = "frultl00p";
+
+        // Base SQL query to execute
+        String sqlQuery = "SELECT SYSDATE FROM DUAL";
+
+        // Connection and query execution
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            // Print query result
+            while (resultSet.next()) {
+                System.out.println("Current Database Date: " + resultSet.getString(1));
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return null; // No pod found
     }
 }
-
